@@ -26,9 +26,9 @@ pipeline {
        stage("Tag backend image") {
        steps{
     tagImage([
-            sourceImagePath: "docker.io/amishark",
-            sourceImageName: "node-backend",
-            sourceImageTag : "latest",
+//             sourceImagePath: "docker.io/amishark",
+//             sourceImageName: "node-backend",
+//             sourceImageTag : "latest",
             toImagePath: "docker.io/amishark",
             toImageName    : "node-backend",
             toImageTag     : "${env.BUILD_NUMBER}"
@@ -44,9 +44,9 @@ pipeline {
       stage("Tag image") {
        steps{
     tagImage([
-            sourceImagePath: "docker.io/amishark",
-            sourceImageName: "node-frontend",
-            sourceImageTag : "latest",
+//             sourceImagePath: "docker.io/amishark",
+//             sourceImageName: "node-frontend",
+//             sourceImageTag : "latest",
             toImagePath: "docker.io/amishark",
             toImageName    : "node-frontend",
             toImageTag     : "${env.BUILD_NUMBER}"
