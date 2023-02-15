@@ -19,10 +19,10 @@ pipeline {
         }
         stage("Docker Build and tag backend") {
            when {
-        changeset "./Dockerfile"
-        changeset "./package-lock.json"
-        changeset "./package.json"
-        changeset "./server.js"          
+        changeset "Dockerfile"
+        changeset "package-lock.json"
+        changeset "package.json"
+        changeset "server.js"          
       }
             steps {
                 binaryBuild(buildConfigName: appName1, buildFromPath: ".")
