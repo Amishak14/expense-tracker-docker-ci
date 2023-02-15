@@ -12,11 +12,11 @@ appName2 = "amisha-expense-tracker-frontend-buildconfig"
 pipeline {
     agent any
     stages {
-//         stage("Checkout") {
-//             steps {
-//                 checkout scm
-//             }
-//         }
+        stage("Checkout") {
+            steps {
+                checkout scm
+            }
+        }
         stage("Docker Build and tag backend") {
            when {
         changeset "my-poc/Dockerfile"
