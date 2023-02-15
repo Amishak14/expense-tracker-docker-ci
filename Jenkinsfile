@@ -26,9 +26,7 @@ pipeline {
       }
             steps {
                 binaryBuild(buildConfigName: appName1, buildFromPath: ".")
-            }
-          
-          tagImage([
+               tagImage([
            sourceImagePath: "amisha-jenkins",
              sourceImageName: "expense-tracker-backend",
              sourceImageTag : "latest",
@@ -37,8 +35,7 @@ pipeline {
             toImageTag     : "${env.BUILD_NUMBER}"
       
     ])
-          
-          
+            }
         }
       
 //        stage("Tag backend image") {
@@ -54,7 +51,7 @@ pipeline {
 //     ])
 //        }
 // }
-     stage("Docker Build frontend") {
+     stage("Docker Build and tag frontend") {
        when {
         changeset "my-poc/client"        
       }
