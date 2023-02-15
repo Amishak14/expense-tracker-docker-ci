@@ -19,10 +19,10 @@ pipeline {
         }
         stage("Docker Build and tag backend") {
            when {
-        changeset "my-poc/Dockerfile"
-        changeset "my-poc/package-lock.json"
-        changeset "my-poc/package.json"
-        changeset "my-poc/server.js"          
+        changeset "https://github.com/Amishak14/expense-tracker-docker-ci/blob/main/Dockerfile"
+        changeset "https://github.com/Amishak14/expense-tracker-docker-ci/blob/main/package-lock.json"
+        changeset "https://github.com/Amishak14/expense-tracker-docker-ci/blob/main/package.json"
+        changeset "https://github.com/Amishak14/expense-tracker-docker-ci/blob/main/server.js"          
       }
             steps {
                 binaryBuild(buildConfigName: appName1, buildFromPath: ".")
