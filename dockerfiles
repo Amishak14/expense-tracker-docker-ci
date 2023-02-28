@@ -1,0 +1,104 @@
+#MULTISTAGE DOCKER FILE FOR CLIENT
+
+# Stage 1: Build
+FROM node:14.15.1 as builder
+WORKDIR /app
+COPY package*.json ./
+RUN npm install --no-cache       #no cache: resolve the permission error by avoiding the creation of the cache directory.
+COPY . .
+
+# Stage 2: Run
+FROM node:14.15.1-alpine
+WORKDIR /app
+COPY --from=builder /app /app
+RUN chmod -R 777 /app
+EXPOSE 3000
+CMD ["npm", "start"]
+
+image: amishark/expense-tracker-frontend:multi-4  
+
+
+#MULTISTAGE DOCKER FILE FOR BACKENd
+# Build stage
+FROM node:12.18.1-alpine AS builder
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
+COPY . .
+
+# Stage 2
+FROM node:12.18.1-alpine
+WORKDIR /app
+COPY --from=builder /app /app
+RUN chmod -R 777 /app
+EXPOSE 5000
+CMD ["npm","start"]
+
+image: amishark/expense-tracker-backend:multi-4  
+
+
+-------------------------------------------------------------------------------------------------------
+
+
+#NORMAL CLIENT DOCKER FILE
+FROM node:12.18.1-slim
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
+COPY . .
+RUN chmod -R 777 /app
+EXPOSE 3000
+CMD ["npm","start"]
+
+
+
+image: amishark/expense-tracker-frontend:10
+
+
+#NORMAL DOCKERFILE FOR BACKEND
+FROM node:12.18.1-slim
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
+COPY . .
+RUN chmod -R 777 /app
+EXPOSE 5000
+CMD ["npm","run","server"]
+
+image: amishark/expense-tracker-backend:10
+
+-----------------------------------------------------------------------------------------
+#DOCKERFLE USING UBI nodejs runtime
+
+#for backend
+FROM registry.access.redhat.com/ubi8/nodejs-12
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
+COPY . .
+EXPOSE 5000
+CMD ["npm","run","server"]
+
+image:amishark/expense-tracker-backend:vanilla-01
+
+#for frontend
+FROM registry.access.redhat.com/ubi8/nodejs-12
+WORKDIR /app
+COPY package*.json ./
+RUN npm install
+COPY . .
+EXPOSE 5000
+CMD ["npm","start"]
+
+image:amishark/expense-tracker-frontend:vanilla-01
+
+--------------------------------------------------------------------------------------------------
+#DOCKER file using UBI8
+
+
+
+
+
+
+
+
