@@ -94,7 +94,43 @@ image:amishark/expense-tracker-frontend:vanilla-01
 
 --------------------------------------------------------------------------------------------------
 #DOCKER file using UBI8
+------------------------------------------------------------
+The binaryBuild function is used in Jenkins to invoke the OpenShift or Kubernetes Binary Build feature. It creates a new build from binary input in a registry or from a source code repository, such as Git.
 
+The binaryBuild function takes a set of parameters that specify the build configuration, source code repository, and other related details. For example, the buildConfigName parameter is used to specify the name of the BuildConfig object in the OpenShift or Kubernetes cluster.
+
+When the binaryBuild function is executed, it triggers a new build in the OpenShift or Kubernetes cluster, using the specified source code and build parameters. The build process will compile the source code, create a Docker image, and push it to a registry, as defined in the BuildConfig.
+
+By using the binaryBuild function in Jenkins, you can automate the build and deployment process for your application, allowing you to quickly build, test, and deploy new versions of your application with a single command.
+
+
+
+Binary source: In the context of a build configuration, a binary source refers to pre-compiled code or libraries that are included as part of the build process. The binary source is already in a machine-executable format and does not need to be compiled again.
+Git source: In the context of a build configuration, a Git source refers to the source code stored in a Git repository. The code is retrieved from the repository and compiled during the build process. The advantage of using a Git source is that it provides version control, collaboration and other benefits that come with using Git.
+In summary, the difference between binary source and Git source in a build configuration is that binary source refers to pre-compiled code, while Git source refers to the source code stored in a Git repository.
+
+
+how does it work? even binry source is taken from git only right?
+Yes, you are correct. In many cases, binary source is retrieved from a Git repository and stored as part of the build configuration.
+The process works as follows:
+The build configuration specifies the location of the binary source in the Git repository.
+The build system retrieves the binary source from the specified location in the Git repository.
+The binary source is included as part of the build process, along with any other required components.
+The build process combines the binary source and other components into a final product, such as an executable file, a library, or an application.
+By including binary source in the build process, the build time is reduced since the source code does not need to be compiled. The binary source is already in a machine-executable format, which can be included in the final product without the need for additional compilation.
+However, it's important to note that using binary source also means that the build process has less control over the source code and may limit the ability to customize or modify the code.
+
+
+
+ sh "sed -i 's+image-registry.openshift-image-registry.svc:5000/dhanya-jenkins/node-gitserver.*+image-registry.openshift-image-registry.svc:5000/dhanya-jenkins/node-gitserver:${DOCKERTAG}+g' ./dev/backend.yaml"
+
+This is a shell command that is executed on a Unix-like operating system. The command uses the sed utility, which is a stream editor used to perform basic text transformations on an input stream.
+
+The -i option is used to edit the file in place, meaning that the file specified in the command, ./dev/backend.yaml, will be modified directly. The s option is used to perform a substitution on the input stream, and the regular expression 's+image-registry.openshift-image-registry.svc:5000/dhanya-jenkins/node-gitserver.*+image-registry.openshift-image-registry.svc:5000/dhanya-jenkins/node-gitserver:${DOCKERTAG}+g' specifies the pattern to match and the replacement text.
+
+The pattern image-registry.openshift-image-registry.svc:5000/dhanya-jenkins/node-gitserver.* matches any text that starts with the specified string, and the .* matches any characters that follow. The replacement text image-registry.openshift-image-registry.svc:5000/dhanya-jenkins/node-gitserver:${DOCKERTAG} specifies the text to replace the matched text with. The g at the end of the expression specifies that all occurrences of the pattern in each line of the input should be replaced.
+
+In short, this command will replace any text matching the pattern in the file ./dev/backend.yaml with the value of the environment variable ${DOCKERTAG}.
 
 
 
